@@ -44,6 +44,10 @@ d3App.directive('ghVisualization', function () {
                 var link = scope.svgContainer.selectAll("path")
                     .data(links)
                     .enter().insert("path","g")// TODO  this code is needed
+
+                link.transition()
+                    .duration(400)
+                    .attr("transform", "translate(1,1)rotate(0)")
                     .attr("class", "link")
                     .attr("d", scope.elbow)
 
@@ -51,8 +55,13 @@ d3App.directive('ghVisualization', function () {
                 var node = scope.svgContainer.selectAll("g")
                     .data(nodes)
                     .enter().append("g")// TODO this code is needed
+
+                node.transition()
+                .duration(200)
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .attr("class", "node")
+
+
 
                 node.append("svg:circle")
                     .attr("r", 3.5);

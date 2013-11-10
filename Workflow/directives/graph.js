@@ -43,25 +43,40 @@ d3App.directive('ghVisualization', function () {
                 //scope.svgContainer.selectAll(".link").remove();
                 var link = scope.svgContainer.selectAll("path")
                     .data(links)
-                    .enter().insert("path","g")// TODO  this code is needed
 
-                link.transition()
-                    .duration(400)
+                link.enter().insert("path","g")// TODO  this code is needed
                     .attr("transform", "translate(1,1)rotate(0)")
                     .attr("class", "link")
                     .attr("d", scope.elbow)
 
+                link.transition()
+                    .duration(400)
+                    .attr("transform", "translate(1,1)rotate(0)")
+                    .attr("d", scope.elbow)
+
+                link.exit()
+                    .transition()
+                    .duration(1000)
+                    .attr("d", scope.elbow)
+                    .remove();
 
                 var node = scope.svgContainer.selectAll("g")
                     .data(nodes)
-                    .enter().append("g")// TODO this code is needed
-
-                node.transition()
-                .duration(200)
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .attr("class", "node")
 
+                node.enter().append("g")// TODO this code is needed
 
+                node.transition()
+                    .duration(200)
+                    .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+                    .attr("class", "node")
+
+                node.exit()
+                    .transition()
+                    .duration(1000)
+                    .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+                    .remove();
 
                 node.append("svg:circle")
                     .attr("r", 3.5);

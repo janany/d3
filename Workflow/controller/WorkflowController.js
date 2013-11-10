@@ -21,7 +21,7 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
         $scope.data = {
             "name" : "A",
             "children" :[
-
+                {"name" : "A1" },
                 {"name" : "A2" },
                 {"name" : "A3",
                     "children":[

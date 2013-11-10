@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="d3App">
+<head>
+    <meta charset="utf-8">
+    <title>Workflow</title>
+
+    <script src="http://d3js.org/d3.v2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="jquery-1.10.2.js"></script>
+
+    <script src="controller/WorkflowController.js"></script>
+    <script src="directives/graph.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body data-ng-controller="WorkflowCtrl">
+
+    <!--div class="startFlow" data-ng-click="showNodes()">Start</div>
+
+    <div class="nodeItems">
+        <ul ng-show="showMenu"  hide-menu="" style="top: 186px; left: 256px; display: none;" >
+            <li data-ng-click="addNodeElement('INPUT')" >
+                <span>Data Input</span>
+            </li>
+            <li data-ng-click="addNodeElement('EXECUTION')">
+                <span>Execution</span>
+            </li>
+            <li data-ng-click="addNodeElement('TRIGGER')">
+                <span>Trigger</span>
+            </li>
+        </ul>
+    </div-->
+    <div class="modify" data-ng-click="modifyData()">ModifyData</div>
+    <div class="treeContainer"></div>
+
+    <gh-visualization val="data"></gh-visualization>
+
+
+</body>
+</html>

@@ -14,7 +14,6 @@ d3App.directive('ghVisualization', function () {
         },
 
         link: function (scope, element, attrs) {
-               debugger;
             // set up initial svg object
 
             scope.svgContainer = d3.select('.treeContainer')
@@ -42,16 +41,16 @@ d3App.directive('ghVisualization', function () {
                 var links = scope.tree.links(nodes);
 
                 //scope.svgContainer.selectAll(".link").remove();
-                var link = scope.svgContainer.selectAll("pathlink")
-                    .data(links, function(d){return d})
-                    //.enter().append("svg:path")// TODO  this code is needed
+                var link = scope.svgContainer.selectAll("path")
+                    .data(links)
+                    .enter().insert("path","g")// TODO  this code is needed
                     .attr("class", "link")
                     .attr("d", scope.elbow)
 
 
-                var node = scope.svgContainer.selectAll("g.node")
+                var node = scope.svgContainer.selectAll("g")
                     .data(nodes)
-                    //.enter().append("svg:g")// TODO this code is needed
+                    .enter().append("g")// TODO this code is needed
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .attr("class", "node")
 
@@ -85,22 +84,22 @@ d3App.directive('ghVisualization', function () {
                     //+ (d.target.children ? "" : "h" + margin.right);
                 }
 
-                var link = scope.svgContainer.selectAll("pathlink")
+                var link = scope.svgContainer.selectAll("path")
                     .data(links)
 
                 // Enter…
-                link.enter().append("svg:path")
+                link.enter().append("path")
                     .attr("class", "link")
                     .attr("d", scope.elbow);
                 // Exit…
                 link.exit().remove();
 
 
-                var node = scope.svgContainer.selectAll("g.node")
+                var node = scope.svgContainer.selectAll("g")
                     .data(nodes)
 
                 // Enter…
-                node.enter().append("svg:g")
+                node.enter().append("g")
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .attr("class", "node")
                 // Exit…

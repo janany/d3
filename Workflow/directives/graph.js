@@ -65,7 +65,17 @@ d3App.directive('ghVisualization', function () {
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .attr("class", "node")
 
-                node.enter().append("g")// TODO this code is needed
+                var g = node.enter().append("g")// TODO this code is needed
+
+                    g.append("svg:circle")
+                        .attr("r", 3.5);
+                    g.append("svg:text")
+                        .attr("dx", function(d) { return d.children ? -8 : 8; })
+                        .attr("dy", 3)
+                        .attr("text-anchor", function(d) { return d.children ? "end" : "start"; })
+                        .text(function(d) { return d.name; })
+
+
 
                 node.transition()
                     .duration(200)
@@ -78,15 +88,10 @@ d3App.directive('ghVisualization', function () {
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .remove();
 
-                node.append("svg:circle")
-                    .attr("r", 3.5);
+
 
                 // place the name atribute left or right depending if children
-                node.append("svg:text")
-                    .attr("dx", function(d) { return d.children ? -8 : 8; })
-                    .attr("dy", 3)
-                    .attr("text-anchor", function(d) { return d.children ? "end" : "start"; })
-                    .text(function(d) { return d.name; })
+
             };
 
             scope.render =  function(newVal, oldVal){

@@ -79,7 +79,7 @@ d3App.directive('ghVisualization', function () {
 
                 if(reDraw){  //TODO 1
                     link.transition()
-                        .duration(50)
+                        .duration(300)
                         //.attr("transform", "translate(1,1)rotate(0)")
                         .attr("d", elbow)
                 }
@@ -87,7 +87,7 @@ d3App.directive('ghVisualization', function () {
                 if(reDraw){//TODO 2
                     link.exit()
                         .transition()
-                        .duration(50)
+                        .duration(300)
                         .attr("d", elbow)
                         .remove();
                 }
@@ -106,7 +106,7 @@ d3App.directive('ghVisualization', function () {
 
                 if(reDraw){  //TODO 3
                     node.transition()
-                        .duration(50)
+                        .duration(300)
                         .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                         .attr("class", "node")
                 }
@@ -115,7 +115,7 @@ d3App.directive('ghVisualization', function () {
                 if(reDraw){ //TODO 4
                     node.exit()
                         .transition()
-                        .duration(50)
+                        .duration(300)
                         .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                         .remove();
                 }

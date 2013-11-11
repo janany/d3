@@ -49,18 +49,18 @@ d3App.directive('ghVisualization', function () {
                     link = scope.svgContainer.selectAll("path").data(links), node, g;
 
                 link.enter().insert("path","g")
-                    .attr("transform", "translate(1,1)rotate(0)")
+                    //.attr("transform", "translate(1,1)rotate(0)")
                     .attr("class", "link")
                     .attr("d", scope.elbow)
 
                 link.transition()
-                    .duration(400)
-                    .attr("transform", "translate(1,1)rotate(0)")
+                    .duration(50)
+                    //.attr("transform", "translate(1,1)rotate(0)")
                     .attr("d", scope.elbow)
 
                 link.exit()
                     .transition()
-                    .duration(1000)
+                    .duration(50)
                     .attr("d", scope.elbow)
                     .remove();
 
@@ -73,19 +73,16 @@ d3App.directive('ghVisualization', function () {
 
                 plotCircle(g);
 
-
                 node.transition()
-                    .duration(200)
+                    .duration(50)
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .attr("class", "node")
 
                 node.exit()
                     .transition()
-                    .duration(1000)
+                    .duration(50)
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .remove();
-
-
 
                 // place the name atribute left or right depending if children
 
@@ -119,7 +116,6 @@ d3App.directive('ghVisualization', function () {
                     .attr("d", scope.elbow);
                 // Exit
                 link.exit().remove();
-
 
                 var node = scope.svgContainer.selectAll("g")
                     .data(nodes, function(d) { return d.name;})

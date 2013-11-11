@@ -16,19 +16,18 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
     };
 
     $scope.modifyData = function(){
-
-        window.rerender = true;
         $scope.data = {
             "name" : "A",
             "children" :[
                 {"name" : "A1" },
-                {"name" : "A2" },
                 {"name" : "A3",
                     "children":[
                         {
                             "name" : "A31",
                             "children" :[
-                                {"name" : "A314" }, {"name" : "A315" }
+                                {"name" : "A314" },
+                                {"name" : "A316" },
+                                {"name" : "A315" }
                             ]
                         }
                     ]
@@ -75,6 +74,6 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
     };*/
 
     function addNode(){
-          console.log("will add a node");
+        console.log("will add a node");
     }
 });

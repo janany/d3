@@ -4,7 +4,18 @@ d3App.directive('ghVisualization', function () {
     var margin = 20,
         width = 960,
         height = 500 - .5 - margin,
-        color = d3.interpolateRgb("#f77", "#77f");
+        plotCircle = function (group) {
+            group.append("svg:circle")
+                .attr("r", 3.5);
+
+            group.append("svg:text")
+                .attr("dx", function(d) {
+                    return d.children ? -8 : 8;
+                })
+                .attr("dy", 3)
+                .attr("text-anchor", function(d) { return d.children ? "end" : "start"; })
+                .text(function(d) { return d.name; });
+        };
 
     return {
         restrict: 'E',
@@ -24,27 +35,20 @@ d3App.directive('ghVisualization', function () {
                 .attr("transform", "translate(40, 0)");
 
             scope.$watch('val', function (newVal, oldVal) {
-            //TODO   remove the window scope later, just addded for testing . Should modify this later
-                if(window.rerender){
+                if(scope.tree){
                     scope.reDraw(newVal);
-                    window.rerender = false;
-                }
-                else{
+                } else {
                     scope.render(newVal, oldVal);
                 }
             });
 
             scope.reDraw =  function(newVal){
                 // Preparing the data for the tree layout, convert data into an array of nodes
-                var nodes = scope.tree.nodes(newVal);
-                // Create an array with all the links
-                var links = scope.tree.links(nodes);
+                var nodes = scope.tree.nodes(newVal),
+                    links = scope.tree.links(nodes),
+                    link = scope.svgContainer.selectAll("path").data(links), node, g;
 
-                //scope.svgContainer.selectAll(".link").remove();
-                var link = scope.svgContainer.selectAll("path")
-                    .data(links)
-
-                link.enter().insert("path","g")// TODO  this code is needed
+                link.enter().insert("path","g")
                     .attr("transform", "translate(1,1)rotate(0)")
                     .attr("class", "link")
                     .attr("d", scope.elbow)
@@ -60,21 +64,14 @@ d3App.directive('ghVisualization', function () {
                     .attr("d", scope.elbow)
                     .remove();
 
-                var node = scope.svgContainer.selectAll("g")
+                node = scope.svgContainer.selectAll("g")
                     .data(nodes, function(d) { return d.name;})
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .attr("class", "node")
 
-                var g = node.enter().append("g")// TODO this code is needed
+                g = node.enter().append("g")
 
-                    g.append("svg:circle")
-                        .attr("r", 3.5);
-                    g.append("svg:text")
-                        .attr("dx", function(d) { return d.children ? -8 : 8; })
-                        .attr("dy", 3)
-                        .attr("text-anchor", function(d) { return d.children ? "end" : "start"; })
-                        .text(function(d) { return d.name; })
-
+                plotCircle(g);
 
 
                 node.transition()
@@ -134,17 +131,7 @@ d3App.directive('ghVisualization', function () {
                 // Exit
                 node.exit().remove();
 
-
-                // Add the dot at every node
-                node.append("svg:circle")
-                    .attr("r", 3.5);
-
-                // place the name atribute left or right depending if children
-                node.append("svg:text")
-                    .attr("dx", function(d) { return d.children ? -8 : 8; })
-                    .attr("dy", 3)
-                    .attr("text-anchor", function(d) { return d.children ? "end" : "start"; })
-                    .text(function(d) { return d.name; })
+                plotCircle(node);
             }
         }
     }

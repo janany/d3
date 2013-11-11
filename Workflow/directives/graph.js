@@ -61,7 +61,7 @@ d3App.directive('ghVisualization', function () {
                     .remove();
 
                 var node = scope.svgContainer.selectAll("g")
-                    .data(nodes)
+                    .data(nodes, function(d) { return d.name;})
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .attr("class", "node")
 
@@ -116,22 +116,22 @@ d3App.directive('ghVisualization', function () {
                 var link = scope.svgContainer.selectAll("path")
                     .data(links)
 
-                // Enter…
+                // Enter
                 link.enter().append("path")
                     .attr("class", "link")
                     .attr("d", scope.elbow);
-                // Exit…
+                // Exit
                 link.exit().remove();
 
 
                 var node = scope.svgContainer.selectAll("g")
-                    .data(nodes)
+                    .data(nodes, function(d) { return d.name;})
 
-                // Enter…
+                // Enter
                 node.enter().append("g")
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .attr("class", "node")
-                // Exit…
+                // Exit
                 node.exit().remove();
 
 

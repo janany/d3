@@ -1,11 +1,7 @@
 
 d3App.directive('ghVisualization', function () {
-    // constants
-    var margin = 20,
-        width = 960,
-        height = 500 - .5 - margin,
 
-        colorMap = {
+    var colorMap = {
             "dataInput": "red",
             "execution": "blue",
             "trigger": "yellow"
@@ -36,10 +32,10 @@ d3App.directive('ghVisualization', function () {
         link: function (scope, element, attrs) {
             // set up initial svg object
             scope.svgContainer = d3.select('.treeContainer')
-                .append("svg:svg")
+                .append("svg")
                 .attr("width", 400)
                 .attr("height", 300)
-                .append("svg:g")
+                .append("g")
                 .attr("transform", "translate(40, 0)");
 
 
@@ -79,21 +75,16 @@ d3App.directive('ghVisualization', function () {
 
                 if(reDraw){  //TODO 1
                     link.transition()
-                        .duration(300)
+                        .duration(400)
                         //.attr("transform", "translate(1,1)rotate(0)")
                         .attr("d", elbow)
                 }
                 // Exit
-                if(reDraw){//TODO 2
-                    link.exit()
-                        .transition()
-                        .duration(300)
-                        .attr("d", elbow)
-                        .remove();
-                }
-                else{
-                    link.exit().remove();
-                }
+                link.exit()
+                    .transition()
+                    .duration(400)
+                    .attr("d", elbow)
+                    .remove();
 
                 node = scope.svgContainer.selectAll("g")
                     .data(nodes, function(d) { return d.name;})
@@ -104,24 +95,18 @@ d3App.directive('ghVisualization', function () {
                     .attr("class", "node")
                 plotCircle(g);
 
-                if(reDraw){  //TODO 3
+                if(reDraw){  //TODO 2
                     node.transition()
-                        .duration(300)
+                        .duration(400)
                         .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
-                        .attr("class", "node")
                 }
 
                 // Exit
-                if(reDraw){ //TODO 4
-                    node.exit()
-                        .transition()
-                        .duration(300)
-                        .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
-                        .remove();
-                }
-                else{
-                    node.exit().remove();
-                }
+                node.exit()
+                    .transition()
+                    .duration(400)
+                    .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+                    .remove();
             }
         }
     }

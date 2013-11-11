@@ -16,7 +16,7 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
     };
 
     $scope.modifyData = function(){
-        $scope.data =  {
+        $scope.data = {
             "name" : "A",
             "type": "trigger",
             "children" :[
@@ -37,6 +37,7 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
                 {"name" : "A4",  "type": "dataInput" }
             ]
         };
+        /*$scope.data =  window.addData;*/
     };
     $scope.deleteData = function(){
         $scope.data =  {
@@ -59,6 +60,7 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
                 }
             ]
         };
+        /*$scope.data =  window.removeData;*/
     };
 
     $scope.data =  {
@@ -82,7 +84,4 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
         ]
     };
 
-    function addNode(){
-        console.log("will add a node");
-    }
 });

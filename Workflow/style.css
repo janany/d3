@@ -6,12 +6,13 @@ body{
 
 .modify{
     border: 1px solid green;
-    width: 50px;
+    width: 100px;
     height: 25px;
     background-color: grey;
     color: black;
     text-align: center;
     top: 50%;
+    float: left;
 }
 .nodeItems{
     border: 1px solid black;

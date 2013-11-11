@@ -16,21 +16,43 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
     };
 
     $scope.modifyData = function(){
-        $scope.data = {
+        $scope.data =  {
             "name" : "A",
+            "type": "trigger",
             "children" :[
-
-                {"name" : "A2" },
+                {"name" : "A1",  "type": "dataInput"},
+                {"name" : "A2",  "type": "dataInput" },
                 {"name" : "A3",
+                    "type": "trigger",
                     "children":[
                         {
                             "name" : "A31",
+                            "type": "trigger",
                             "children" :[
-                                {"name" : "A311" },
-                                {"name" : "A312" },
-                                {"name" : "A313" },
-                                {"name" : "A314" },
-                                {"name" : "A315" }
+                                {"name" : "A311", "type": "execution" },{"name" : "A312", "type": "execution" },{"name" : "A313", "type": "execution"},{"name" : "A314", "type": "execution" }, {"name" : "A315", "type": "execution" }
+                            ]
+                        }
+                    ]
+                },
+                {"name" : "A4",  "type": "dataInput" }
+            ]
+        };
+    };
+    $scope.deleteData = function(){
+        $scope.data =  {
+            "name" : "A",
+            "type": "trigger",
+            "children" :[
+
+                {"name" : "A2",  "type": "dataInput" },
+                {"name" : "A3",
+                    "type": "trigger",
+                    "children":[
+                        {
+                            "name" : "A31",
+                            "type": "trigger",
+                            "children" :[
+                                {"name" : "A311", "type": "execution" },{"name" : "A312", "type": "execution" },{"name" : "A313", "type": "execution"},{"name" : "A314", "type": "execution" }, {"name" : "A315", "type": "execution" }
                             ]
                         }
                     ]
@@ -41,15 +63,18 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
 
     $scope.data =  {
         "name" : "A",
+        "type": "trigger",
         "children" :[
-            {"name" : "A1" },
-            {"name" : "A2" },
+            {"name" : "A1",  "type": "dataInput"},
+            {"name" : "A2",  "type": "dataInput" },
             {"name" : "A3",
+                "type": "trigger",
                 "children":[
                     {
                         "name" : "A31",
+                        "type": "trigger",
                         "children" :[
-                            {"name" : "A311" },{"name" : "A312" },{"name" : "A313" },{"name" : "A314" }, {"name" : "A315" }
+                            {"name" : "A311", "type": "execution" },{"name" : "A312", "type": "execution" },{"name" : "A313", "type": "execution"},{"name" : "A314", "type": "execution" }, {"name" : "A315", "type": "execution" }
                         ]
                     }
                 ]

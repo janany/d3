@@ -5,9 +5,17 @@ d3App.directive('ghVisualization', function () {
         width = 960,
         height = 500 - .5 - margin,
 
+        colorMap = {
+            "dataInput": "red",
+            "execution": "blue",
+            "trigger": "yellow"
+        },
         plotCircle = function (group) {
             group.append("svg:circle")
-                .attr("r", 3.5);
+                .attr("r", 3.5)
+                .style("fill", function(d){
+                      return colorMap[d.type];
+                });
 
             group.append("svg:text")
                 .attr("dx", function(d) {

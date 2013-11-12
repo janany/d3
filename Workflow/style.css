@@ -26,3 +26,6 @@ body{
     stroke: #ccc;
     stroke-width: 4.5px;
 }
+svg{
+    border: 1px solid red;
+}

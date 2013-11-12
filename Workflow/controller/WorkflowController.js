@@ -37,11 +37,7 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
                     ]
                 },
                 {"name" : "A4",  "type": "dataInput" },
-                {"name" : "A5",  "type": "dataInput" },
-                {"name" : "A6",  "type": "dataInput" },
-                {"name" : "A7",  "type": "dataInput" },
-                {"name" : "A8",  "type": "dataInput" },
-                {"name" : "A9",  "type": "dataInput" }
+                {"name" : "A5",  "type": "dataInput" }
             ]
         };
         /*$scope.data =  window.addData;*/

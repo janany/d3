@@ -1,17 +1,16 @@
 
 d3App.directive('ghVisualization', function () {
 
-    var colorMap = {
-            "dataInput": "red",
-            "execution": "blue",
-            "trigger": "yellow"
-        },
+    var margin = {top: 20, right: 20, bottom: 20, left: 20},
+        padding = {top: 60, right: 60, bottom: 60, left: 60},
+        outerWidth = 960,
+        outerHeight = 500,
+        innerWidth = outerWidth - margin.left - margin.right,
+        innerHeight = outerHeight - margin.top - margin.bottom,
+        width = innerWidth - padding.left - padding.right,
+        height = innerHeight - padding.top - padding.bottom;
+
         plotCircle = function (group) {
-            /*group.append("svg:circle")
-                .attr("r", 3.5)
-                .style("fill", function(d){
-                      return colorMap[d.type];
-                });*/
             group.append("svg:path")
                 .attr("d", function(d){
                     switch(d.type){
@@ -53,13 +52,10 @@ d3App.directive('ghVisualization', function () {
             // set up initial svg object
             scope.svgContainer = d3.select('.treeContainer')
                 .append("svg:svg")
-                //.attr("width", 400)
-                //.attr("height", 300)
-                //.attr("viewBox", "0 0 " + 400+ " " + 300)
-                //.attr("preserveAspectRatio", "xMidYMid meet")
-                //.style("overflow", "auto")
+                //.attr("width", outerWidth)
+                //.attr("height", outerHeight)
                 .append("svg:g")
-                .attr("transform", "translate(40, 150)")
+                //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
             scope.$watch('val', function (newVal, oldVal) {
@@ -130,9 +126,18 @@ d3App.directive('ghVisualization', function () {
                     .duration(400)
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .remove();
+
+                setTimeout(function(){
+                    var rect = $('svg g')[0].getBoundingClientRect();
+                    $('svg').width(rect.width);
+                    $('svg').height(rect.height);
+
+                    var _left = rect.left;
+                    var _top = Math.abs(rect.top);
+                    scope.svgContainer.attr("transform", "translate(" + _left + "," + _top + ")");
+
+                },500);
             }
-                //var _width = $('svg g')[0].getBoundingClientRect().width;
-                //var _height = $('svg g')[0].getBoundingClientRect().height;
         }
     }
 });

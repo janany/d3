@@ -88,7 +88,7 @@ d3App.directive('ghVisualization', function () {
                 // Preparing the data for the tree layout, convert data into an array of nodes and create an array with all the links
                 var nodes = scope.tree.nodes(newVal),
                     links = scope.tree.links(nodes),
-                    link = scope.svgContainer.selectAll("path").data(links), node, g, elbow;
+                    link = scope.svgContainer.selectAll("path.link").data(links), node, g, elbow;
 
                 elbow = function elbow(d, i) {
                     return "M" + d.source.y + "," + d.source.x

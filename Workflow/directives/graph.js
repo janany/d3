@@ -7,16 +7,36 @@ d3App.directive('ghVisualization', function () {
             "trigger": "yellow"
         },
         plotCircle = function (group) {
-            group.append("svg:circle")
+            /*group.append("svg:circle")
                 .attr("r", 3.5)
                 .style("fill", function(d){
                       return colorMap[d.type];
-                });
+                });*/
            /* group.append('svg:polygon')
                 .attr("fill", "white")
                 .attr('stroke', "blue")
                 .attr('stroke-width', 2)
                 .attr('points',"0,-20 30,-20 50,0 30,20 0,20 20,0")*/
+            group.append("svg:path")
+                .attr("d", function(d){
+                    switch(d.type){
+                        case 'dataInput':
+                            return "M 0,-20 L 30,-20 L 50,0 L 30,20 L 0,20 L 20,0 z";
+                            break;
+
+                        case 'execution':
+                            return "M 0,-23 A 22 22 0 1 1  0,-20";
+
+                            break;
+
+                        case 'trigger':
+                            return "M 0,-20 L 0,20  L 40,0 z";
+                            break;
+                    }
+                })
+                .attr('fill', "#1D80C0")  //#FFFFFF
+                .attr('stroke', "#888888") //#1D80C0
+                .attr('stroke-width', 1)
 
             group.append("svg:text")
                 .attr("dx", function(d) {

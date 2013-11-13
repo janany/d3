@@ -70,9 +70,9 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
         "name" : "A",
         "type": "trigger",
         "children" :[
-            {"name" : "A1",  "type": "dataInput"},
-            {"name" : "A2",  "type": "dataInput" },
-            {"name" : "A3",
+            {"name" : "A1",  "type": "dataInput"}
+            /*{"name" : "A2",  "type": "dataInput" },*/
+            /*{"name" : "A3",
                 "type": "trigger",
                 "children":[
                     {
@@ -83,7 +83,7 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
                         ]
                     }
                 ]
-            }
+            }*/
         ]
     };
 

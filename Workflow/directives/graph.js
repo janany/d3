@@ -81,11 +81,18 @@ d3App.directive('ghVisualization', function () {
                     links = scope.tree.links(nodes),
                     link = scope.svgContainer.selectAll("path.link").data(links), node, g, elbow;
 
+                console.log("json ", newVal);
+                console.log("nodes ", nodes);
+                console.log("links ", links);
+
                 elbow = function elbow(d, i) {
+                    console.log(d,   "source:  d.y:  ", d.source.y, "source  d.x:   ", d.source.x, "target:  d.y ", d.target.y, "target d.x  ", d.target.x);
                     return "M" + d.source.y + "," + d.source.x
                         + "H" + d.target.y + "V" + d.target.x ;
                     //+ (d.target.children ? "" : "h" + margin.right);
                 }
+                var diagonal = d3.svg.diagonal()
+                    .projection(function(d) { return [d.y, d.x]; });
 
                 // Enter
                 link.enter().insert("path","g")
@@ -129,12 +136,11 @@ d3App.directive('ghVisualization', function () {
 
                 setTimeout(function(){
                     var rect = $('svg g')[0].getBoundingClientRect();
-                    $('svg').width(rect.width);
-                    $('svg').height(rect.height);
-
                     var _left = rect.left;
                     var _top = Math.abs(rect.top);
-                    scope.svgContainer.attr("transform", "translate(" + _left + "," + _top + ")");
+                    //scope.svgContainer.attr("transform", "translate(" + _left + "," + _top + ")");
+                    //$('svg').width(rect.width+_left);
+                    //$('svg').height(rect.height+_top);
 
                 },500);
             }

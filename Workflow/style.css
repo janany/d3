@@ -30,3 +30,8 @@ svg{
     border: 1px solid red;
     overflow: auto;
 }
+.treeContainer{
+    max-width: 600px;
+    max-height: 400px;
+    overflow: auto;
+}

@@ -49,6 +49,19 @@ d3App.directive('ghVisualization', function () {
         },
 
         link: function (scope, element, attrs) {
+            //Added debounce to make sure this function is not repeatedly called for all the nodes of the svg
+            var fixDimension = _.debounce(function(){
+                scope.svgContainer.attr('transform', '');
+                var rect = $('svg g')[0].getBoundingClientRect();
+                $('svg').width(rect.width-rect.left)
+                    .height(rect.height+20);
+
+                var _left = rect.left+35;   //35 buffer to accomodate the text
+                var _top = Math.abs(rect.top)+10;
+                scope.svgContainer.attr("transform", "translate(" + _left + "," + _top + ")");
+
+            }, 50);
+
             // set up initial svg object
             scope.svgContainer = d3.select('.treeContainer')
                 .append("svg:svg")
@@ -81,18 +94,11 @@ d3App.directive('ghVisualization', function () {
                     links = scope.tree.links(nodes),
                     link = scope.svgContainer.selectAll("path.link").data(links), node, g, elbow;
 
-                console.log("json ", newVal);
-                console.log("nodes ", nodes);
-                console.log("links ", links);
-
                 elbow = function elbow(d, i) {
-                    console.log(d,   "source:  d.y:  ", d.source.y, "source  d.x:   ", d.source.x, "target:  d.y ", d.target.y, "target d.x  ", d.target.x);
                     return "M" + d.source.y + "," + d.source.x
                         + "H" + d.target.y + "V" + d.target.x ;
                     //+ (d.target.children ? "" : "h" + margin.right);
                 }
-                var diagonal = d3.svg.diagonal()
-                    .projection(function(d) { return [d.y, d.x]; });
 
                 // Enter
                 link.enter().insert("path","g")
@@ -118,31 +124,25 @@ d3App.directive('ghVisualization', function () {
                 // Enter
                 g = node.enter().append("g")
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
-                    .attr("class", "node")
+                    .attr("class", "node");
                 plotCircle(g);
 
                 if(reDraw){  //TODO 2
                     node.transition()
+                        .each("end", fixDimension)
                         .duration(400)
-                        .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+                        .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+                } else {
+                    fixDimension();
                 }
 
                 // Exit
                 node.exit()
                     .transition()
+                    .each("end", fixDimension)
                     .duration(400)
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .remove();
-
-                setTimeout(function(){
-                    var rect = $('svg g')[0].getBoundingClientRect();
-                    var _left = rect.left;
-                    var _top = Math.abs(rect.top);
-                    //scope.svgContainer.attr("transform", "translate(" + _left + "," + _top + ")");
-                    //$('svg').width(rect.width+_left);
-                    //$('svg').height(rect.height+_top);
-
-                },500);
             }
         }
     }

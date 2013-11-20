@@ -1,7 +1,7 @@
 
 d3App.directive('ghVisualization', function () {
 
-        plotCircle = function (group) {
+        plotNodes = function (group) {
             group.append("svg:path")
                 .attr("d", function(d){
                     switch(d.type){
@@ -10,7 +10,7 @@ d3App.directive('ghVisualization', function () {
                             break;
 
                         case 'execution':
-                            return "M 0,-23 A 22 22 0 1 1  0,-20";
+                            return "M 0,-7 A 22 22 0 1 1 0 0";
 
                             break;
 
@@ -19,8 +19,8 @@ d3App.directive('ghVisualization', function () {
                             break;
                     }
                 })
-                .attr('fill', "#1D80C0")  //#FFFFFF
-                .attr('stroke', "#888888") //#1D80C0
+                .attr('fill', "#1D80C0")
+                .attr('stroke', "#888888")
                 .attr('stroke-width', 1)
 
             group.append("svg:text")
@@ -41,7 +41,7 @@ d3App.directive('ghVisualization', function () {
 
         link: function (scope, element, attrs) {
             //Added debounce to make sure this function is not repeatedly called for all the nodes of the svg
-            var fixDimension = _.debounce(function(){
+            var fixSVGDimension = _.debounce(function(){
                 scope.svgContainer.attr('transform', '');
                 var rect = $('svg g')[0].getBoundingClientRect();
                 $('svg').width(rect.width-rect.left)
@@ -56,10 +56,7 @@ d3App.directive('ghVisualization', function () {
             // set up initial svg object
             scope.svgContainer = d3.select('.treeContainer')
                 .append("svg:svg")
-                //.attr("width", outerWidth)
-                //.attr("height", outerHeight)
                 .append("svg:g")
-                //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             scope.$watch('val', function (newVal, oldVal) {
                 var reDraw = false;
@@ -76,8 +73,12 @@ d3App.directive('ghVisualization', function () {
                 }
                 if(! scope.tree){
                     scope.tree = d3.layout.tree()
-                        .nodeSize([100,100])//.size([300,150])
+                        .nodeSize([100,100])
+                        /*.size([500,350])*/
                 }
+               /* else{
+                    scope.tree.nodeSize([70,70])
+                }*/
 
                 // Preparing the data for the tree layout, convert data into an array of nodes and create an array with all the links
                 var nodes = scope.tree.nodes(newVal),
@@ -95,10 +96,9 @@ d3App.directive('ghVisualization', function () {
                     .attr("class", "link")
                     .attr("d", elbow);
 
-                if(reDraw){  //TODO 1
+                if(reDraw){
                     link.transition()
                         .duration(400)
-                        //.attr("transform", "translate(1,1)rotate(0)")
                         .attr("d", elbow)
                 }
                 // Exit
@@ -115,21 +115,20 @@ d3App.directive('ghVisualization', function () {
                 g = node.enter().append("g")
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .attr("class", "node");
-                plotCircle(g);
+                plotNodes(g);
 
-                if(reDraw){  //TODO 2
+                if(reDraw){
                     node.transition()
-                        .each("end", fixDimension)
+                        .each("end", fixSVGDimension)
                         .duration(400)
                         .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
                 } else {
-                    fixDimension();
+                    fixSVGDimension();
                 }
-
                 // Exit
                 node.exit()
                     .transition()
-                    .each("end", fixDimension)
+                    .each("end", fixSVGDimension)
                     .duration(400)
                     .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
                     .remove();

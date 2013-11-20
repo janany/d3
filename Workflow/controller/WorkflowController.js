@@ -29,7 +29,20 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
                             "name" : "A31",
                             "type": "trigger",
                             "children" :[
-                                {"name" : "A311", "type": "execution" },{"name" : "A312", "type": "execution" },{"name" : "A313", "type": "execution"},{"name" : "A314", "type": "execution" }, {"name" : "A315", "type": "execution" }
+                                {"name" : "A311", "type": "execution",
+                                    "children":[
+                                        {
+                                            name: "sdfdf",
+                                            type: "trigger"
+                                        }
+
+                                    ]
+
+                                },
+                                {"name" : "A312", "type": "execution" },
+                                {"name" : "A313", "type": "execution"},
+                                {"name" : "A314", "type": "execution" },
+                                {"name" : "A315", "type": "execution" }
                                 //,{"name" : "A3111", "type": "execution" },{"name" : "A3121", "type": "execution" },{"name" : "A3131", "type": "execution"},{"name" : "A3141", "type": "execution" }, {"name" : "A3151", "type": "execution" }
                                 //,{"name" : "A3112", "type": "execution" },{"name" : "A3122", "type": "execution" },{"name" : "A3133", "type": "execution"},{"name" : "A3144", "type": "execution" }, {"name" : "A3155", "type": "execution" }
                             ]
@@ -83,7 +96,9 @@ d3App.controller('WorkflowCtrl', function WorkflowCtrl ($scope, $http) {
                         ]
                     }
                 ]
-            }
+            },
+            {"name" : "A4",  "type": "dataInput"},
+            {"name" : "A5",  "type": "dataInput" }
         ]
     };
 

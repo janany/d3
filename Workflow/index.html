@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="d3App">
+<head>
+    <meta charset="utf-8">
+    <title>Workflow</title>
+
+    <script src="d3.v3.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="http://underscorejs.org/underscore.js"></script>
+    <script src="jquery-1.10.2.js"></script>
+
+    <script src="controller/WorkflowController.js"></script>
+    <script src="directives/graph.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body data-ng-controller="WorkflowCtrl">
+    <div class="treeContainer"></div>
+    <div class="modify" data-ng-click="modifyData()">Modify Data</div>
+    <div class="modify delete" data-ng-click="deleteData()">Delete Data</div>
+    <gh-visualization val="data"></gh-visualization>
+</body>
+</html>
